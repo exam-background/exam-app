@@ -5,22 +5,40 @@
 			<van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
 			<van-tabbar-item icon="search">发现</van-tabbar-item>
 			<van-tabbar-item icon="friends-o">学习</van-tabbar-item>
-			<van-tabbar-item icon="setting-o" to="/user">我的</van-tabbar-item>
+			<van-tabbar-item icon="setting-o">我的</van-tabbar-item>
 		</van-tabbar>
 	</div>
 </template>
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	export default {
 		data() {
 			return {
 				active: 0,
 			};
 		},
+		computed: {
+			...mapState(['hasLogin'])
+		},
 		methods: {
 			onChange(num) {
 				//切换时更新
 				this.active = num;
-				console.log(num);
+				// 判断是否登陆
+				if (this.active == 3) {
+					if (!this.hasLogin) {
+						console.log("我没有登陆，进入登录界面");
+						// that.$router.push('/Login')
+						this.$router.push('/Login')
+						// window.href="/Login"
+						// 登陆以后改变我们vuex的状态
+					} else {
+						console.log("我登陆过，进入用户页面");
+						this.$router.push('/user')
+					}
+				}
 			},
 			onClickLeft() {
 				// Toast('返回');

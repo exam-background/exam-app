@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import list from "../components/list.vue";
-import user from "../views/user.vue";
+// import Login from "../views/Login/login.vue";
 Vue.use(VueRouter);
 
 const routes = [{
@@ -29,6 +29,18 @@ const routes = [{
 		name: "user",
 		component: () =>
 			import( /* webpackChunkName: "about" */ "../views/user.vue")
+	},
+	{
+		path: "/Login",
+		name: "Login",
+		component: () =>
+			import("../views/Login/login.vue")
+	},
+	{
+		path: "/detail",
+		name: "detail",
+		component: () =>
+			import("../views/detail/detail.vue")
 	}
 	
 ];
