@@ -1,7 +1,7 @@
 <template>
 	<div class="detail">
 		<div>
-			<van-nav-bar left-arrow title="详情页" @click-left="onClickLeft" />
+			<van-nav-bar left-arrow title="详情页"/>
 		</div>
 		<div class="detail-title">
 			我是一个前端开发者，我到底要不要学习NodeJS？
@@ -36,19 +36,47 @@
 			return {
 				detailId: 0,
 				image: require('../../../static/1.png'), //测试的数据
+				exercise: []
+			}
+		},
+		methods: {
+			fetchData() {
+				var _this = this;
+				if(this.selTypes == 0){
+					this.$axios
+					.get(this.$location.getJobDayExerciseById, {params: {id: this.detailId}})
+					.then(response => {
+						this.exercise = this.list.concat(response.data.data);
+						console.log("就业训练查询结果---->" + JSON.stringify(this.list));
+					})
+					.catch(function(error) {
+						// 请求失败处理
+						console.log("技术训练请求处理失败");
+						console.log(error);
+					});
+				}else{
+					this.$axios
+					.get(this.$location.getTechnologyDayExerciseById, {params: {id: this.detailId}})
+					.then(response => {
+						this.exercise = this.list.concat(response.data.data);
+						console.log("就业训练查询结果---->" + JSON.stringify(this.list));
+					})
+					.catch(function(error) {
+						// 请求失败处理
+						console.log("技术训练请求处理失败");
+						console.log(error);
+					});
+				}
+				
 			}
 		},
 		mounted() {
 			// console.log(this.$route.query.id);
 			// 给内容页赋值然后获取数据
 			this.detailId = this.$route.query.id;
-			// 后端同学自己去请求 页面我就死数据了
-		},
-		methods: {
-			fetchData(id) {
-				var _this = this;
-
-			}
+			this.selTypes = 0;
+			// this.selTypes = this.$route.query.types;
+			this.fetchData();
 		}
 	};
 </script>

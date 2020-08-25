@@ -16,14 +16,12 @@
 						<p class="fs_13">{{item.content}}</p>
 					</div>
 					<div class="con_tag">
-						<van-tag class="tag" type="primary">标签</van-tag>
-						<van-tag class="tag" type="primary">标签</van-tag>
-						<van-tag class="tag" type="primary">标签</van-tag>
+						<van-tag class="tag" type="primary">{{item.professional.professionalName}}</van-tag>
 					</div>
 
 					<div>
 						<p class="color_red fz_15">{{item.more}}</p>
-						<router-link :to="{name:'detail',path:'/detail',query:{id:1}}"  tag="p" class="color_red fz_15">Read More</router-link>
+						<router-link :to="{name:'detail',path:'/detail',query:{id:item.id}}"  tag="p" class="color_red fz_15">Read More</router-link>
 					</div>
 				</div>
 			</div>
@@ -35,12 +33,18 @@
 
 <script>
 	export default {
-		props:['categoryID'],
+		props:['categoryID', 'types'],
 		watch: {
 			categoryID: function(val) {
-				this.getExercise(val)
+				this.categoryID = val;
+				
+				this.getExercise()
 				//console.log(val); // 接收父组件的值
 				// 然后重新list这个数组的数据渲染数据
+			},
+			types: function(val) {
+				this.types = val;
+				this.getExercise()
 			}
 		},
 		data() {
@@ -54,8 +58,11 @@
 				// }
 				loading: false,
 				finished: false,
+				curPage: 1,
+				pageSize: 4
 			}
 		},
+
 		methods: {
 			onLoad() {
 				let that = this;
@@ -76,38 +83,42 @@
 					}
 				}, 1000);
 			},
-			getExercise(id){
-				this.$axios
-					.get(this.$location.getJobDayExerciseByProfessid, {params: {id: id}})
-					.then(response => {
+			getExercise(){
+				this.list = [];
+				if(this.types == 0){
+					this.$axios
+						.get(this.$location.getJobDayExerciseByProfessid, {params: {id: this.categoryID, pageSize: this.pageSize, currentPage: this.currentPage}})
+						.then(response => {
+							this.list = this.list.concat(response.data.data.data);
+							console.log("就业训练查询结果---->" + JSON.stringify(this.list));
+						})
+						.catch(function(error) {
+							// 请求失败处理
+							console.log("技术训练请求处理失败");
+							console.log(error);
+						});
+				}else{
+					// 根据id查询就业训练所有题目
+					this.$axios
+						.get(
+						this.$location.getTechnologyDayExerciseByProfessionalId, {params: {id: this.categoryID, pageSize: this.pageSize, currentPage: this.currentPage}})
+						.then(response => {
 						this.list = this.list.concat(response.data.data);
-						console.log("就业训练查询结果---->" + JSON.stringify(this.list));
-					})
-					.catch(function(error) {
+						console.log(
+							"技术训练查询结果---->" +
+							JSON.stringify(this.TechnologyDayExerciseList)
+						);
+						})
+						.catch(function(error) {
 						// 请求失败处理
-						console.log("技术训练请求处理失败");
+						console.log("就业训练请求处理失败");
 						console.log(error);
-					});
-				// 根据id查询就业训练所有题目
-				this.$axios
-					.get(
-					this.$location.getTechnologyDayExerciseByProfessionalId, {params: {id: id}})
-					.then(response => {
-					this.list = this.list.concat(response.data.data);
-					console.log(
-						"技术训练查询结果---->" +
-						JSON.stringify(this.TechnologyDayExerciseList)
-					);
-					})
-					.catch(function(error) {
-					// 请求失败处理
-					console.log("就业训练请求处理失败");
-					console.log(error);
-					});
+						});
+				}
 			}
 		},
 		mounted() {
-			this.getExercise(0);
+			this.getExercise();
 		}
 
 	}
