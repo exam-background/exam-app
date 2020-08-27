@@ -12,8 +12,16 @@
 				</div>
 			</van-col>
 		</van-row>
+		<van-row type="flex" class="row_m">
+			<van-col class="row_c" span="12" @click="clickTypes(0)">
+				<van-button round type="info" style="width:120px;">测试</van-button>
+			</van-col>
+			<van-col class="row_c" span="12" @click="clickTypes(1)">
+				<van-button round type="info" style="width:120px;">测试</van-button>
+			</van-col>
+		</van-row>
 		<!-- 内容 -->
-		<router-view :category-i-d="categoryID"/>
+		<router-view :category-i-d="categoryID" :types="types"/>
 		<!-- 底部tabs -->
 	</div>
 </template>
@@ -25,35 +33,12 @@
 			return {
 				active: 0,
 				categoryID:0,
-				IcoList: [{
-						name: '语文',
-						pic: require('../../static/1.png'),
-						typeid: 1
-					},
-					{
-						name: '数学',
-						pic: require('../../static/2.png'),
-						typeid: 2
-					},
-					{
-						name: '英语',
-						pic: require('../../static/3.png'),
-						typeid: 3
-					},
-					{
-						name: '编程',
-						pic: require('../../static/4.png'),
-						typeid: 4
-					},
-					{
-						name: '奥数',
-						pic: require('../../static/5.png'),
-						typeid: 5
-					}
-				],
+				IcoList: [],
 				JobDayExerciseList: [],
 				TechnologyDayExerciseList: [],
-				id: 0
+				id: 0,
+				types: 0
+
 			};
 		},
 		methods: {
@@ -84,7 +69,11 @@
 					});
 			},
 			clickProfessional(id) {
+				this.id = id;
 				this.categoryID = id;
+			},
+			clickTypes(id){
+				this.types = id;
 			}
 		},
 		mounted() {
