@@ -1,8 +1,8 @@
 <template>
 	<div id="app">
 		<router-view />
-		<van-tabbar v-model="active" @change="onChange">
-			<van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
+		<van-tabbar v-model="active" @change="onChange" v-show="$store.state.isShowBar">
+			<van-tabbar-item icon="home-o" to="/Home">首页</van-tabbar-item>
 			<van-tabbar-item icon="search">发现</van-tabbar-item>
 			<van-tabbar-item icon="friends-o">学习</van-tabbar-item>
 			<van-tabbar-item icon="setting-o">我的</van-tabbar-item>
@@ -16,11 +16,11 @@
 	export default {
 		data() {
 			return {
-				active: 0,
+				active: 0
 			};
 		},
 		computed: {
-			...mapState(['hasLogin'])
+			//...mapState(['hasLogin'])
 		},
 		methods: {
 			onChange(num) {
@@ -28,11 +28,11 @@
 				this.active = num;
 				// 判断是否登陆
 				if (this.active == 3) {
-					if (!this.hasLogin) {
+					if (null == localStorage.getItem('stuToken')) {
 						console.log("我没有登陆，进入登录界面");
 						// that.$router.push('/Login')
 						this.$router.push('/Login')
-						// window.href="/Login"
+						//window.href="/Login"
 						// 登陆以后改变我们vuex的状态
 					} else {
 						console.log("我登陆过，进入用户页面");
@@ -47,6 +47,22 @@
 				// Toast('按钮');
 			},
 		},
+		mounted(){
+			//alert(this.$store.state.hasLogin)
+			//alert("fsdfsd")
+			// if (this.$route.path == "/Login") {
+			// 			console.log("我没有登陆");
+			// 			// that.$router.push('/Login')
+			// 				this.isShowBar =  false
+			// 			//lthis.$router.push('/Login')
+			// 			//window.href="/Login"
+			// 			// 登陆以后改变我们vuex的状态
+			// 		} else {
+			// 			this.isShowBar =  true
+			// 			console.log("我登陆过了");
+			// 			this.$router.push('/Home')
+			// 		}
+		}
 	};
 </script>
 <style>

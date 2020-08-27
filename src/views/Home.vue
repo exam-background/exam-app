@@ -73,9 +73,9 @@
 				this.$axios
 					.get(this.$location.getProfessionalNoPage)
 					.then(response => {
-					console.log("专业查询结果---->" + JSON.stringify(response.data.data));
+					//console.log("专业查询结果---->" + JSON.stringify(response.data.data));
 					that.IcoList = response.data.data;
-					console.log("专业查询结果---->" + JSON.stringify(this.IcoList));
+					//console.log("专业查询结果---->" + JSON.stringify(this.IcoList));
 					})
 					.catch(function(error) {
 					// 请求失败处理

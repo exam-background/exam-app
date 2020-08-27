@@ -1,8 +1,11 @@
 //考核
 
-var examsystemPath = 'http://localhost:8081/examsystem'
+var examsystemPath = 'http://192.168.43.30:8081/examsystem'
 
 const location ={
+	
+  doLogin : examsystemPath + '/app/Student/doLogin',
+  courseForPage : examsystemPath + '/courseForPage',
   // 查询所有专业分类
   getProfessionalNoPage: examsystemPath + '/getProfessionalNoPage',
   // 根据id查询就业训练所有题目
