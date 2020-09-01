@@ -14,10 +14,10 @@
 		</van-row>
 		<van-row type="flex" class="row_m">
 			<van-col class="row_c" span="12" @click="clickTypes(0)">
-				<van-button round type="info" style="width:120px;">测试</van-button>
+				<van-button round type="info" style="width:120px;">就业训练</van-button>
 			</van-col>
 			<van-col class="row_c" span="12" @click="clickTypes(1)">
-				<van-button round type="info" style="width:120px;">测试</van-button>
+				<van-button round type="info" style="width:120px;">技术训练</van-button>
 			</van-col>
 		</van-row>
 		<!-- 内容 -->
@@ -58,14 +58,14 @@
 				this.$axios
 					.get(this.$location.getProfessionalNoPage)
 					.then(response => {
-					console.log("专业查询结果---->" + JSON.stringify(response.data.data));
-					that.IcoList = response.data.data;
-					console.log("专业查询结果---->" + JSON.stringify(this.IcoList));
+						console.log("专业查询结果---->" + JSON.stringify(response.data.data));
+						that.IcoList = response.data.data;
+						console.log("专业查询结果---->" + JSON.stringify(this.IcoList));
 					})
 					.catch(function(error) {
-					// 请求失败处理
-					console.log("查询请求处理失败");
-					console.log(error);
+						// 请求失败处理
+						console.log("查询请求处理失败");
+						console.log(error);
 					});
 			},
 			clickProfessional(id) {
