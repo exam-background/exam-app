@@ -2,18 +2,23 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import list from "../components/list.vue";
+import store from '../store/index'
 // import Login from "../views/Login/login.vue";
 Vue.use(VueRouter);
 
 const routes = [{
+		// path: "/",
+		// name: "Home",
+		// component: Home,
+		// children: [{
+		// 	path: "/",
+		// 	name: "list",
+		// 	component: list,
+		// }]
 		path: "/",
-		name: "Home",
-		component: Home,
-		children: [{
-			path: "/",
-			name: "list",
-			component: list,
-		}]
+		name: "Login",
+		component: () =>
+			import("../views/Login/login.vue")
 	},
 	{
 		path: "/about",
@@ -41,8 +46,24 @@ const routes = [{
 		name: "detail",
 		component: () =>
 			import("../views/detail/detail.vue")
+	},
+	{
+		path: "/Home",
+		name: "Home",
+		component: Home,
+		children: [{
+			path: "/",
+			name: "list",
+			component: list,
+		}]
+	},
+	{
+		path: "/Papers",
+		name: "Papers",
+		component: () =>
+			import("../views/Papers.vue")
 	}
-	
+
 ];
 
 const router = new VueRouter({
@@ -51,4 +72,19 @@ const router = new VueRouter({
 	routes
 });
 
-export default router;
+router.beforeEach(function(to, from, next) {
+	if("/Login" == to.path){
+		store.commit("set_isShowBar",false);
+	}else{
+		store.commit("set_isShowBar",true);
+	}
+	console.log('--' + localStorage.getItem('stuToken') + to.path)
+	//alert("fdsfs");
+	if (null == localStorage.getItem('stuToken')) {
+		if (to.path !== '/Login') {
+			return next('/Login')
+		}
+	}
+	next()
+})
+export default router

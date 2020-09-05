@@ -8,7 +8,7 @@ import location from '@/locations/location';
 import commons from '@/locations/commons';
 import axios from 'axios';
 import qs from 'qs';
-
+import 'lib-flexible'
 import Router from 'vue-router'
 
 Vue.use(Vant);

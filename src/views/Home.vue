@@ -12,14 +12,6 @@
 				</div>
 			</van-col>
 		</van-row>
-		<van-row type="flex" class="row_m">
-			<van-col class="row_c" span="12" @click="clickTypes(0)">
-				<van-button round type="info" style="width:120px;">就业训练</van-button>
-			</van-col>
-			<van-col class="row_c" span="12" @click="clickTypes(1)">
-				<van-button round type="info" style="width:120px;">技术训练</van-button>
-			</van-col>
-		</van-row>
 		<!-- 内容 -->
 		<router-view :category-i-d="categoryID" :types="types"/>
 		<!-- 底部tabs -->
@@ -36,8 +28,7 @@
 				IcoList: [],
 				JobDayExerciseList: [],
 				TechnologyDayExerciseList: [],
-				id: 0,
-				types: 0
+				id: 0
 
 			};
 		},
@@ -49,6 +40,7 @@
 			},
 			onClickLeft() {
 				// Toast('返回');
+				alert("fdsfd")
 			},
 			onClickRight() {
 				// Toast('按钮');
@@ -71,9 +63,6 @@
 			clickProfessional(id) {
 				this.id = id;
 				this.categoryID = id;
-			},
-			clickTypes(id){
-				this.types = id;
 			}
 		},
 		mounted() {

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const commons = {
   getProfressionals:function(){
-    axios.get('http://localhost:8081/examsystem/courseForPage',{
+    axios.get(this.$location.courseForPage,{
       params:{
         pageSize:10,
         currentPage:1
