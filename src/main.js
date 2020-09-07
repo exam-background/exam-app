@@ -11,6 +11,7 @@ import qs from 'qs';
 import 'lib-flexible'
 import Router from 'vue-router'
 
+
 Vue.use(Vant);
 Vue.config.productionTip = false;
 Vue.prototype.$location = location;

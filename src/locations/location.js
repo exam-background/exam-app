@@ -1,8 +1,8 @@
 //考核
-var examsystemPath = 'http://localhost:8081/examsystem'
+var examsystemPath = 'http://192.168.43.30:8081/examsystem'
 
 const location ={
-	
+	getStuById : examsystemPath + "/getStuById",
   doLogin : examsystemPath + '/app/Student/doLogin',
   courseForPage : examsystemPath + '/courseForPage',
   // 查询所有专业分类

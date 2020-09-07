@@ -5,8 +5,8 @@
 		<van-nav-bar title="首页" />
 		<!-- 菜单 -->
 		<van-row type="flex" class="row_m">
-			<van-col v-for="item in IcoList" :key="item"  class="row_c" span="5" @click="clickProfessional(item.id)">
-				<div><img :src="item.pic" /></div>
+			<van-col v-for="item in IcoList" :key="item"  class="row_c" span="6" @click="clickProfessional(item.id)">
+				<div><img :src="item.professionalDesc"/></div>
 				<div>
 					<p>{{item.professionalName}}</p>
 				</div>
@@ -71,5 +71,8 @@
 	};
 </script>
 <style>
+	.row_m{
+		text-align: center;
+	}
 	@import url("../../static/css/comm.css");
 </style>

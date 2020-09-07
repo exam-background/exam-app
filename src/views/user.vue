@@ -5,9 +5,7 @@
 				<div class="box">
 					  <img class="pic_t" src="../../static/lion.png"/>
 					  <div>
-						<h3>个人信息1</h3>
-						<h3>个人信息2</h3>
-						<h3>个人信息3</h3>
+						<h1>{{className}}-{{proName}}-{{stuName}}</h1>
 					  </div>
 				</div>
 			</div> 
@@ -25,69 +23,79 @@
 			</div>
 		</div> -->
 		<div class="pars">
-			<van-row style="margin:0px 0px 10px 0px;">
-				<h2 style="float:left;margin-left:20px;">查看错题</h2>
-			</van-row>
 			<van-row gutter="20" class="row_c">
 				<van-col span="8">
-					<div><img/></div>
+					<div><img src="../../public/cuoti1.png"/></div>
 					<div>
 						<p>技术训练错题本</p>
 					</div>
 				</van-col>
 				<van-col span="8">
-					<div><img/></div>
+					<div><img src="../../public/cuoti2.png"/></div>
 					<div>
 						<p>就业训练错题本</p>
 					</div>
 				</van-col>
 				<van-col span="8">
-					<div><img/></div>
+					<div><img src="../../public/shijuan.png"/></div>
 					<div>
 						<p>试卷错题</p>
 					</div>
 				</van-col>
 			</van-row>
 		</div>
-		<van-button type="primary" block @click="exit">退出当前账号</van-button>
+		<van-button id="exit" type="primary" block @click="exit">退出当前账号</van-button>
 	</div>
 </template>
 
 <script>
+	import { Dialog } from 'vant';
 	export default {
 		data() {
 			return {
 				indexList:[],
+				className:'',
+				proName : '',
+				stuName:''
 			}
 		},
 		components: {
 			
 		},
 		mounted() {
-			this.axios.get("https://www.fastmock.site/mock/092fc8390d9e8e4066597c3753d23ffa/mhqtapp/api")
-				.then((res) => {
-					this.wot = res.data.wot.dtxt
+			let stuId = localStorage.getItem("stuToken").split("-")[2]
+				
+			this.$axios.get(this.$location.getStuById,{params:{"id":stuId}}).then(res=>{
+				this.proName = res.data.data.professionalName
+				this.className = res.data.data.className
+				this.stuName = res.data.data.studentName
+			});
+			// this.axios.get("https://www.fastmock.site/mock/092fc8390d9e8e4066597c3753d23ffa/mhqtapp/api")
+			// 	.then((res) => {
+			// 		this.wot = res.data.wot.dtxt
 
-				})
-				.catch((errer) => {
-					console.log(errer);
-				})
+			// 	})
+			// 	.catch((errer) => {
+			// 		console.log(errer);
+			// 	})
 		},
 		methods: {
-			but() {
-				if (this.usr == "" || this.par == "") {
-					alert("不能为空")
-				} else if (this.usr != this.usrgg || this.par != this.pargg) {
-					alert("账号或密码错误")
-				} else {
-					this.$router.push({
-						path: '/hoeh'
-					});
-					this.$store.commit('yows')
-				}
-			},
+			
+
 			exit () {
-				alert("退出")
+				Dialog.confirm({
+				  title: '标题',
+				  message: '弹窗内容',
+				})
+				  .then(() => {
+				    localStorage.removeItem("stuToken");
+				    this.$router.push("/");
+				  })
+				  .catch(() => {
+				    
+				  });
+				
+				//alert("退出")
 			}
 		}
 	}
@@ -160,8 +168,8 @@
 	}
 
 	.pars {
-		margin-top: 20px;
-		padding-bottom: 20px;
+		margin-top: 60%;
+		padding-bottom: 60%;
 		width: 100%; 
 	}
 
@@ -228,5 +236,15 @@
 	.row_c img{
 		width: 45px;
 		height: 45px;
+	}
+	h1{
+		position: relative;
+		top: 83px;
+	}
+	#exit{
+		height: 70px;
+		bottom: 58px;
+		position: absolute;
+		font-size: 40px;
 	}
 </style>

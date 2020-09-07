@@ -3,7 +3,6 @@
 		<router-view />
 		<van-tabbar v-model="active" @change="onChange" v-show="$store.state.isShowBar">
 			<van-tabbar-item icon="home-o" to="/Home">首页</van-tabbar-item>
-			<van-tabbar-item icon="search">发现</van-tabbar-item>
 			<van-tabbar-item icon="friends-o" to="/Papers">试卷</van-tabbar-item>
 			<van-tabbar-item icon="setting-o">我的</van-tabbar-item>
 		</van-tabbar>
@@ -27,7 +26,7 @@
 				//切换时更新
 				this.active = num;
 				// 判断是否登陆
-				if (this.active == 3) {
+				if (this.active == 2) {
 					if (null == localStorage.getItem('stuToken')) {
 						console.log("我没有登陆，进入登录界面");
 						// that.$router.push('/Login')

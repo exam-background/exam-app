@@ -29,6 +29,7 @@
 </template>
 
 <script>
+	import { Dialog } from 'vant';
 	export default {
 		props: {
 		},
@@ -88,10 +89,13 @@
 						submitAnswer: this.addExercise.submitAnswer
 					}))
 					.then(response => {
-						this.$message({
-							type: 'success',
-							message: response.data.msg
-						})
+						Dialog.alert({
+						  title: '提示',
+						  message: "答题成功",
+						}).then(() => {
+						  // on close
+						});
+						
 						location.href="/Home";
 					})
 					.catch(function(error) {
@@ -107,10 +111,12 @@
 						submitAnswer: this.addExercise.submitAnswer
 					}))
 					.then(response => {
-						this.$message({
-							type: 'success',
-							message: response.data.msg
-						})
+						Dialog.alert({
+						  title: '提示',
+						  message: "答题成功",
+						}).then(() => {
+						  // on close
+						});
 						location.href="/Home"
 					})
 					.catch(function(error) {
