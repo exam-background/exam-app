@@ -17,7 +17,7 @@
 				</van-radio-group>
 			</div>
 			<duv v-else>
-				<textarea v-model="addExercise.submitAnswer" style="width:90%;height:100%;resize: none;padding:10px;"></textarea>
+				<ue v-model="addExercise.submitAnswer" style="width:350px;"></ue>
 			</duv>
 		</div>
 		<div class="detail-content" style="height:80px;margin-top:10px;">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+	import ue from '@/components/ue.vue'
 	import { Dialog } from 'vant';
 	export default {
 		props: {
@@ -137,6 +138,9 @@
 			this.selTypes = this.$route.query.types;
 			// this.selTypes = this.$route.query.types;
 			this.fetchData();
+		},
+		components: {
+			ue
 		}
 	};
 </script>
