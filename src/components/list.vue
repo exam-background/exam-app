@@ -99,7 +99,8 @@
 						console.log(data);
 						this.Page.page = data.total;
 						arrlist.map(item => {
-								this.list.push(item)
+							this.list.push(item)
+							console.log(item)
 						}) 
 						this.Page.page = data.curPage + 1; 
 						// _this.list = res.data 

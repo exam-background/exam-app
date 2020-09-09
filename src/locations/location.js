@@ -20,7 +20,17 @@ const location ={
   // 添加技术每日一练作答
   addTechnologyDayExerciseSubmit: examsystemPath + '/app/TechnologyDayExerciseSubmitController/addTechnologyDayExerciseSubmit',
   // 添加专业每日一练作答
-  addJobDayExerciseSubmit: examsystemPath + '/app/JobDayExerciesSubmitController/addJobDayExerciseSubmit'
+  addJobDayExerciseSubmit: examsystemPath + '/app/JobDayExerciesSubmitController/addJobDayExerciseSubmit',
+  // 根据用户id和类型查询试卷
+  getPapersByUserIdAndType: examsystemPath + '/app/PapersController/getPapersByUserIdAndType',
+  // 根据试卷id查询试卷
+  getPapersById: examsystemPath + '/app/PapersController/getPapersById',
+  // 根据试卷id查询试卷和学生作答
+  getPapersByIdStudent: examsystemPath + '/app/PapersController/getPapersByIdStudent',
+  // 添加学生作答
+  insertPapersUserResult: examsystemPath + '/app/AppPapersUserResultController/insertPapersUserResult',
+  // 根据学生id和类型查询已考试卷
+  getPapersByUserIdAndTypeFinish: examsystemPath + '/app/PapersController/getPapersByUserIdAndTypeFinish'
 }
 
 export default location
