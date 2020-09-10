@@ -80,52 +80,62 @@
 				
 			},
 			insertExercise () {
-				let token = localStorage.getItem("stuToken");
-				let id = token.split('-')[2]
-				if(this.selTypes == 1){
-					this.$axios
-					.post(this.$location.addJobDayExerciseSubmit, this.$qs.stringify({
-						studentId: id,
-						exerciseId: this.detailId,
-						submitAnswer: this.addExercise.submitAnswer
-					}))
-					.then(response => {
-						Dialog.alert({
-						  title: '提示',
-						  message: "答题成功",
-						}).then(() => {
-						  // on close
+				Dialog.confirm({
+					title: '标题',
+					message: '是否提交',
+				})
+				.then(() => {
+					let token = localStorage.getItem("stuToken");
+					let id = token.split('-')[2]
+					if(this.selTypes == 1){
+						this.$axios
+						.post(this.$location.addJobDayExerciseSubmit, this.$qs.stringify({
+							studentId: id,
+							exerciseId: this.detailId,
+							submitAnswer: this.addExercise.submitAnswer
+						}))
+						.then(response => {
+							Dialog.alert({
+							title: '提示',
+							message: "答题成功",
+							}).then(() => {
+							// on close
+							});
+							
+							location.href="/Home";
+						})
+						.catch(function(error) {
+							// 请求失败处理
+							console.log("技术训练请求处理失败");
+							console.log(error);
 						});
-						
-						location.href="/Home";
-					})
-					.catch(function(error) {
-						// 请求失败处理
-						console.log("技术训练请求处理失败");
-						console.log(error);
-					});
-				}else{
-					this.$axios
-					.post(this.$location.addTechnologyDayExerciseSubmit, this.$qs.stringify({
-						studentId: id,
-						exerciseId: this.detailId,
-						submitAnswer: this.addExercise.submitAnswer
-					}))
-					.then(response => {
-						Dialog.alert({
-						  title: '提示',
-						  message: "答题成功",
-						}).then(() => {
-						  // on close
+					}else{
+						this.$axios
+						.post(this.$location.addTechnologyDayExerciseSubmit, this.$qs.stringify({
+							studentId: id,
+							exerciseId: this.detailId,
+							submitAnswer: this.addExercise.submitAnswer
+						}))
+						.then(response => {
+							Dialog.alert({
+							title: '提示',
+							message: "答题成功",
+							}).then(() => {
+							// on close
+							});
+							location.href="/Home"
+						})
+						.catch(function(error) {
+							// 请求失败处理
+							console.log("技术训练请求处理失败");
+							console.log(error);
 						});
-						location.href="/Home"
-					})
-					.catch(function(error) {
-						// 请求失败处理
-						console.log("技术训练请求处理失败");
-						console.log(error);
-					});
-				}
+					}
+				})
+				.catch(() => {
+					
+				});
+				
 			},
 			onClickLeft () {
 				history.back()
