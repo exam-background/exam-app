@@ -8,9 +8,8 @@
         </van-row>
         <van-row>
             <center>
-                <h4>考试时间：{{papers.papersStartDate - papers.papersOverDate}}</h4>
                 <h4>开始时间：{{papers.papersStartDate}}</h4>
-                <h4>结束时间：{{papers.papersOverDate}}</h4>
+                <h4>剩余时间：<van-count-down :time="time" @finish="over"/></h4>
                 <div class="con_tag">
                     <van-tag size="large" class="tag" type="primary" v-if="papers.type == 0">就业训练</van-tag>
                     <van-tag size="large" class="tag" type="primary" v-else>技术训练</van-tag>
@@ -32,7 +31,8 @@
             </div>
         </van-row>
         <div style="margin-button:30px;">
-            <van-button type="primary" block @click="submitPapers">交卷</van-button>
+            <van-button type="primary" block @click="submitPapers" v-if="timeOver">交卷</van-button>
+            <van-button type="primary" block @click="submitPapers" disabled v-else>交卷</van-button>
         </div>
         <div style="margin-top:30px;">
 
@@ -46,8 +46,9 @@
 			return {
                 id: 0,
                 papers: [],
-                time: '',
-                insertPapers: []
+                time: 3600000,
+                insertPapers: [],
+                timeOver: true
 			}
 		},
 		methods: {
@@ -65,10 +66,19 @@
                     console.log(res.data.data)
                     this.papers = res.data.data
 
-                    this.time = this.papers.papersOverDate-this.papers.papersStartDate
-                    console.log(this.papers.papersOverDate)
-                    this.time = (this.time%(3600*24))%3600/60;
-                    console.log("相差分钟："+this.time)
+                    var nowDate = new Date();
+                    var startDate = new Date(this.papers.papersStartDate);
+
+                    if(nowDate <= startDate){
+                        Dialog.alert({
+                            title: '提示',
+                            message: "考试时间为"+this.papers.papersStartDate+"，请耐心等待",
+                        }).then(() => {
+                            history.back()
+                        });
+                    }
+
+                    this.time = this.time - (nowDate-startDate)
 
                     for(let a = 0;a<this.papers.papersTitleList.length;a++){
                         this.insertPapers.push({
@@ -113,6 +123,9 @@
                         // on close
                     });
                 })
+            },
+            over () {
+                this.timeOver = false
             }
         },
         mounted() {

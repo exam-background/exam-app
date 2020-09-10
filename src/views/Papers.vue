@@ -54,8 +54,7 @@
                 <div class="exhibition" v-for="(papersTechnologyDay,index) in papersTechnologyDayExercise" :key="index" :title="papersTechnologyDay">
                     <div class="box">
                         <div class="exhibition_title">
-                            <!-- 得分：{{score[index].count}}/{{score[index].student}} -->
-                            <h4>{{papersTechnologyDay.name}}</h4>
+                            <h4>{{papersTechnologyDay.name}}<span style="margin-left:20px;">得分：{{score[index].count}}/{{score[index].student}}</span></h4>
                         </div>
                         <!-- 标签 -->
                         <div class="con_tag">
@@ -75,8 +74,7 @@
                 <div class="exhibition" v-for="(papersJobDay,index) in papersJobDayExercise" :key="index" :title="papersJobDay">
                     <div class="box">
                         <div class="exhibition_title">
-                            <!-- 得分：{{score[index].count}}/{{score[index].student}} -->
-                            <h4>{{papersJobDay.name}}</h4>
+                            <h4>{{papersJobDay.name}}<span style="margin-left:20px;">得分：{{score[index].count}}/{{score[index].student}}</span></h4>
                         </div>
                         <!-- 标签 -->
                         <div class="con_tag">
@@ -146,7 +144,8 @@
             },
             clickPapers (activeNames) {
                 let token = localStorage.getItem("stuToken");
-				let id = token.split('-')[2]
+                let id = token.split('-')[2]
+                this.score = []
                 this.type = activeNames;
                 console.log("点击下拉框"+activeNames)
                 this.$axios
@@ -158,22 +157,18 @@
                 })
                 .then(res => {
                     console.log(res.data.data)
-                    // alert(0<res.data.data.length);
-                    // for(var c=0;c<this.res.data.data.length;c++){
-                    //     alert(1)
-                    //     this.score.push({
-                    //         count: 0,
-                    //         student: 0
-                    //     });
-                    //     for(let i=0;i<res.data.data[c].papersUserResultList.length;i++){
-                    //         alert(2)
-                    //         // 遍历分数
-                    //         this.score[c].count=this.score[c].count+this.res.data.data[c].papersUserResultList[i].setScore
-                    //         this.score[c].student=this.score[c].student+this.res.data.data[c].papersUserResultList[i].mark
-                    //     }
-                    // }
-                    // alert(JSON.stringify(this.score))
-
+                    for(var c=0;c<res.data.data.length;c++){
+                        this.score.push({
+                            count: 0,
+                            student: 0
+                        });
+                        for(let i=0;i<res.data.data[c].papersUserResultList.length;i++){
+                            // 遍历分数
+                            this.score[c].count=this.score[c].count+res.data.data[c].papersUserResultList[i].setScore
+                            this.score[c].student=this.score[c].student+res.data.data[c].papersUserResultList[i].mark
+                        }
+                    }
+                    console.log(this.score)
                     if(activeNames == 1){
                         this.papersTechnologyDayExercise = res.data.data
                     }else{

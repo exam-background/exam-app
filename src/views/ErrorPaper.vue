@@ -8,9 +8,7 @@
         </van-row>
         <van-row>
             <center>
-                <h4>考试时间：{{papers.papersStartDate - papers.papersOverDate}}</h4>
                 <h4>开始时间：{{papers.papersStartDate}}</h4>
-                <h4>结束时间：{{papers.papersOverDate}}</h4>
                 <div class="con_tag">
                     <van-tag size="large" class="tag" type="primary" v-if="papers.type == 0">就业训练</van-tag>
                     <van-tag size="large" class="tag" type="primary" v-else>技术训练</van-tag>
